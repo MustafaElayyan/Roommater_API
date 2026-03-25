@@ -1,0 +1,13 @@
+using AutoMapper;
+using Roommater_API.DTOs.Auth;
+using Roommater_API.Models;
+
+namespace Roommater_API.Mapping;
+
+public class AuthMappingProfile : Profile
+{
+    public AuthMappingProfile()
+    {
+        CreateMap<User, UserDto>();
+    }
+}
