@@ -56,7 +56,8 @@ public class AuthController : ControllerBase
     [HttpGet("me")]
     public ActionResult<UserDto> Me()
     {
-        var userIdValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userIdValue = User.FindFirstValue(ClaimTypes.NameIdentifier)
+            ?? User.FindFirstValue("sub");
         if (!Guid.TryParse(userIdValue, out var userId))
         {
             return Unauthorized();
