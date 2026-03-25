@@ -34,7 +34,11 @@ public class InMemoryUserService : IUserService
             throw new InvalidOperationException("User already exists.");
         }
 
-        _usersById.TryAdd(user.Id, user);
+        if (!_usersById.TryAdd(user.Id, user))
+        {
+            _usersByEmail.TryRemove(normalizedEmail, out _);
+            throw new InvalidOperationException("Failed to store user.");
+        }
         return user;
     }
 
