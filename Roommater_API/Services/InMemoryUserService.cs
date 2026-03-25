@@ -8,6 +8,11 @@ public class InMemoryUserService : IUserService
     private readonly ConcurrentDictionary<string, User> _usersByEmail = new(StringComparer.OrdinalIgnoreCase);
     private readonly ConcurrentDictionary<Guid, User> _usersById = new();
 
+    public string NormalizeEmail(string email)
+    {
+        return email.Trim().ToLowerInvariant();
+    }
+
     public User? GetByEmail(string email)
     {
         _usersByEmail.TryGetValue(email, out var user);
@@ -22,7 +27,7 @@ public class InMemoryUserService : IUserService
 
     public User Create(string email, string password)
     {
-        var normalizedEmail = email.Trim().ToLowerInvariant();
+        var normalizedEmail = NormalizeEmail(email);
         var user = new User
         {
             Email = normalizedEmail,
@@ -31,7 +36,7 @@ public class InMemoryUserService : IUserService
 
         if (!_usersByEmail.TryAdd(normalizedEmail, user))
         {
-            throw new InvalidOperationException("User already exists.");
+            throw new InvalidOperationException("User with this email already exists.");
         }
 
         if (!_usersById.TryAdd(user.Id, user))

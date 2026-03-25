@@ -25,7 +25,7 @@ public class AuthController : ControllerBase
     [HttpPost("signup")]
     public ActionResult<AuthResponseDto> SignUp([FromBody] AuthRequestDto request)
     {
-        var email = request.Email.Trim().ToLowerInvariant();
+        var email = _userService.NormalizeEmail(request.Email);
         if (_userService.GetByEmail(email) is not null)
         {
             return Conflict(new { message = "Email already in use." });
@@ -40,7 +40,7 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public ActionResult<AuthResponseDto> Login([FromBody] AuthRequestDto request)
     {
-        var email = request.Email.Trim().ToLowerInvariant();
+        var email = _userService.NormalizeEmail(request.Email);
         var user = _userService.GetByEmail(email);
 
         if (user is null || !_userService.VerifyPassword(user, request.Password))
