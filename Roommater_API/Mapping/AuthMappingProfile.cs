@@ -4,7 +4,7 @@ using Roommater_API.Models;
 
 namespace Roommater_API.Mapping;
 
-public class AuthMappingProfile : Profile
+public class AuthMappingProfile : AutoMapper.Profile
 {
     public AuthMappingProfile()
     {
