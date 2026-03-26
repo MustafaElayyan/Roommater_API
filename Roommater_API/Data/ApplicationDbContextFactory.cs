@@ -8,7 +8,8 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
     public ApplicationDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-        var connectionString = "Server=localhost;Port=3306;Database=RoommaterDb;User=root;Password=;";
+        var connectionString = Environment.GetEnvironmentVariable("ROOMMATER_DB_CONNECTION")
+            ?? "Server=localhost;Port=3306;Database=RoommaterDb;User=root;Password=;";
 
         optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 36)));
 

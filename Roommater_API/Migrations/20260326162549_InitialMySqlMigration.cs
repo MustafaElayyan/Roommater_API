@@ -111,7 +111,7 @@ namespace Roommater_API.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Location = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Price = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     PhotoUrls = table.Column<string>(type: "varchar(3000)", maxLength: 3000, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
@@ -251,7 +251,7 @@ namespace Roommater_API.Migrations
                     HouseholdId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Title = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Amount = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     PaidById = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Category = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),

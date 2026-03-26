@@ -43,6 +43,14 @@ public class ApplicationDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Listing>()
+            .Property(l => l.Price)
+            .HasPrecision(18, 2);
+
+        modelBuilder.Entity<Expense>()
+            .Property(e => e.Amount)
+            .HasPrecision(18, 2);
+
+        modelBuilder.Entity<Listing>()
             .HasOne(l => l.Owner)
             .WithMany(u => u.Listings)
             .HasForeignKey(l => l.OwnerId)

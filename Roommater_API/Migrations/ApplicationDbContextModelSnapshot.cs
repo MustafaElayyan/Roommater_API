@@ -106,7 +106,8 @@ namespace Roommater_API.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -256,7 +257,8 @@ namespace Roommater_API.Migrations
                         .HasColumnType("varchar(3000)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Title")
                         .IsRequired()

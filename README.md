@@ -33,7 +33,7 @@ CREATE DATABASE IF NOT EXISTS RoommaterDb_Dev CHARACTER SET utf8mb4 COLLATE utf8
 }
 ```
 
-Set a secure production password and avoid committing secrets.
+For production, provide the connection string through secure configuration (environment variables or secret manager) and avoid storing credentials in source control.
 
 ### 4) Run migrations
 In development, pending migrations are applied automatically on startup.
@@ -43,6 +43,8 @@ You can also apply manually:
 ```bash
 dotnet ef database update --project /home/runner/work/Roommater_API/Roommater_API/Roommater_API/Roommater_API.csproj
 ```
+
+The design-time factory also supports overriding the connection using `ROOMMATER_DB_CONNECTION`.
 
 ## JWT Configuration
 
