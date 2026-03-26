@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MySqlConnector;
 using Roommater_API.Data;
 using Roommater_API.Models;
 using Roommater_API.Services;
@@ -15,8 +16,18 @@ builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(JwtSett
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Default connection string is missing.");
 
+ServerVersion serverVersion;
+try
+{
+    serverVersion = ServerVersion.AutoDetect(connectionString);
+}
+catch (MySqlException)
+{
+    serverVersion = new MySqlServerVersion(new Version(8, 0, 36));
+}
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+    options.UseMySql(connectionString, serverVersion));
 
 builder.Services.AddScoped<IUserService, DbUserService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
