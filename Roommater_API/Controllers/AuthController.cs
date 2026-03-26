@@ -33,12 +33,13 @@ public class AuthController : ControllerBase
 
         var user = _userService.Create(email, request.Password);
         var token = _jwtTokenService.GenerateToken(user);
+        var userDto = _mapper.Map<UserDto>(user);
 
-        return Ok(new AuthResponseDto { Token = token });
+        return Ok(new AuthResponseDto { Token = token, User = userDto });
     }
 
-    [HttpPost("login")]
-    public ActionResult<AuthResponseDto> Login([FromBody] AuthRequestDto request)
+    [HttpPost("signin")]
+    public ActionResult<AuthResponseDto> SignIn([FromBody] AuthRequestDto request)
     {
         var email = _userService.NormalizeEmail(request.Email);
         var user = _userService.GetByEmail(email);
@@ -49,7 +50,8 @@ public class AuthController : ControllerBase
         }
 
         var token = _jwtTokenService.GenerateToken(user);
-        return Ok(new AuthResponseDto { Token = token });
+        var userDto = _mapper.Map<UserDto>(user);
+        return Ok(new AuthResponseDto { Token = token, User = userDto });
     }
 
     [Authorize]

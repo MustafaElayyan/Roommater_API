@@ -8,6 +8,7 @@ public class AuthMappingProfile : Profile
 {
     public AuthMappingProfile()
     {
-        CreateMap<User, UserDto>();
+        CreateMap<User, UserDto>()
+            .ForMember(dest => dest.Uid, opt => opt.MapFrom(src => src.Id));
     }
 }
